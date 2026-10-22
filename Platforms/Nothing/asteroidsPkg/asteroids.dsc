@@ -92,6 +92,11 @@
   UniXNUPkg/Driver/UniXNUDxe/UniXNUDxe.inf
   DarwinBootPkg/Driver/DarwinBoot.inf
 
+  #
+  # Keys over SPMI (power = Enter, volume up/down = Up/Down) without the vendor PMIC stack; see its README.md.
+  #
+  asteroidsPkg/Drivers/ShengKeyInputDxe/ShengKeyInputDxe.inf
+
 [LibraryClasses]
   UniXNULib|UniXNUPkg/Library/UniXNULib/UniXNULib.inf
   FdtLib|MdePkg/Library/BaseFdtLib/BaseFdtLib.inf

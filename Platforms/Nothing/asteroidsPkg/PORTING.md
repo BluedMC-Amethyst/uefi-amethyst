@@ -38,4 +38,7 @@ Bring-up changes in `Include/APRIORI.inc` and `Include/DXE.inc`, each commented 
 | `FeatureEnablerDxe`, `PILProxyDxe`, `PILDxe` | disabled | load TrustZone apps and firmware from partitions |
 | vendor USB stack | disabled | `UsbConfigDxe` faults on 0x221C8300 from a timer once it can't identify the PMIC |
 
-Known issue: in the UniXNU menu the selection moves down by itself about every two seconds.
+Keys: `Drivers/ShengKeyInputDxe`, taken unchanged from uefi-sheng (the 3a's key registers are the same; see its
+README.md). It reads the keys over SPMI (`core` and `obsrvr` windows) and publishes ConIn: volume up/down = Up/Down,
+power = Enter. Tested in the UniXNU menu. Without it there's no input device, and UniXNU's idle rotation moves the
+highlight every two seconds.
