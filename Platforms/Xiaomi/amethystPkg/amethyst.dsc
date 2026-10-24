@@ -92,10 +92,16 @@
   DarwinBootPkg/Driver/DarwinBoot.inf
 
   #
+  # RAM Disk driver for fastboot ramdisk volume discovery
+  #
+  MdeModulePkg/Universal/Disk/RamDiskDxe/RamDiskDxe.inf
+
+  #
   # Keys over SPMI (power = Enter, volume up/down = Up/Down) without the vendor PMIC stack; see its README.md.
   #
   amethystPkg/Drivers/ShengKeyInputDxe/ShengKeyInputDxe.inf
 
 [LibraryClasses]
+  FileExplorerLib|MdeModulePkg/Library/FileExplorerLib/FileExplorerLib.inf
   UniXNULib|UniXNUPkg/Library/UniXNULib/UniXNULib.inf
   FdtLib|MdePkg/Library/BaseFdtLib/BaseFdtLib.inf
