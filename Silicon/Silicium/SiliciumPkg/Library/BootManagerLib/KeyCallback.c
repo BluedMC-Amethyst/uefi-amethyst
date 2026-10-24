@@ -15,9 +15,11 @@
 //
 // Global Variables
 //
-STATIC EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL *mSimpleInExProtocol  = NULL;
-STATIC VOID                              *mNotifyHandle        = NULL;
-STATIC BOOLEAN                            mEnterBootManager    = FALSE;
+STATIC EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL *mSimpleInExProtocol   = NULL;
+STATIC VOID                              *mNotifyHandleVolUp    = NULL;
+STATIC VOID                              *mNotifyHandleVolDown  = NULL;
+STATIC VOID                              *mNotifyHandlePower    = NULL;
+STATIC BOOLEAN                            mEnterBootManager     = FALSE;
 
 EFI_STATUS
 EFIAPI
@@ -81,14 +83,29 @@ RegisterKeyNotify ()
   // Set Key Data
   KeyData.KeyState.KeyToggleState = 0;
   KeyData.KeyState.KeyShiftState  = 0;
-  KeyData.Key.UnicodeChar         = CHAR_NULL;
-  KeyData.Key.ScanCode            = SCAN_UP;
 
   // Register Volume Up Key Notify
-  Status = mSimpleInExProtocol->RegisterKeyNotify (mSimpleInExProtocol, &KeyData, &KeyNotify, &mNotifyHandle);
+  KeyData.Key.UnicodeChar = CHAR_NULL;
+  KeyData.Key.ScanCode    = SCAN_UP;
+  Status = mSimpleInExProtocol->RegisterKeyNotify (mSimpleInExProtocol, &KeyData, &KeyNotify, &mNotifyHandleVolUp);
   if (EFI_ERROR (Status)) {
     DEBUG ((EFI_D_ERROR, "%a: Failed to Register Volume Up Key Notify! Status = %r\n", __FUNCTION__, Status));
-    return Status;
+  }
+
+  // Register Volume Down Key Notify
+  KeyData.Key.UnicodeChar = CHAR_NULL;
+  KeyData.Key.ScanCode    = SCAN_DOWN;
+  Status = mSimpleInExProtocol->RegisterKeyNotify (mSimpleInExProtocol, &KeyData, &KeyNotify, &mNotifyHandleVolDown);
+  if (EFI_ERROR (Status)) {
+    DEBUG ((EFI_D_ERROR, "%a: Failed to Register Volume Down Key Notify! Status = %r\n", __FUNCTION__, Status));
+  }
+
+  // Register Power / Enter Key Notify
+  KeyData.Key.UnicodeChar = CHAR_CARRIAGE_RETURN;
+  KeyData.Key.ScanCode    = SCAN_NULL;
+  Status = mSimpleInExProtocol->RegisterKeyNotify (mSimpleInExProtocol, &KeyData, &KeyNotify, &mNotifyHandlePower);
+  if (EFI_ERROR (Status)) {
+    DEBUG ((EFI_D_ERROR, "%a: Failed to Register Power Key Notify! Status = %r\n", __FUNCTION__, Status));
   }
 
   return EFI_SUCCESS;
@@ -117,17 +134,20 @@ RegisterKeyCallback (IN EFI_DEVICE_PATH_PROTOCOL *DevicePath)
 VOID
 UnregisterKeyCallback ()
 {
-  EFI_STATUS Status;
-
-  // Verify STI Protocol Presense & Key Notify
-  if (mSimpleInExProtocol == NULL || mNotifyHandle == NULL) {
+  // Verify STI Protocol Presence
+  if (mSimpleInExProtocol == NULL) {
     return;
   }
 
-  // Unregister Volume Up Key Notify
-  Status = mSimpleInExProtocol->UnregisterKeyNotify (mSimpleInExProtocol, mNotifyHandle);
-  if (EFI_ERROR (Status)) {
-    DEBUG ((EFI_D_ERROR, "%a: Failed to Unregister Volume Up Key Notify! Status = %r\n", __FUNCTION__, Status));
+  // Unregister Key Notifies
+  if (mNotifyHandleVolUp != NULL) {
+    mSimpleInExProtocol->UnregisterKeyNotify (mSimpleInExProtocol, mNotifyHandleVolUp);
+  }
+  if (mNotifyHandleVolDown != NULL) {
+    mSimpleInExProtocol->UnregisterKeyNotify (mSimpleInExProtocol, mNotifyHandleVolDown);
+  }
+  if (mNotifyHandlePower != NULL) {
+    mSimpleInExProtocol->UnregisterKeyNotify (mSimpleInExProtocol, mNotifyHandlePower);
   }
 }
 

@@ -32,7 +32,7 @@ STATIC UINTN YPos = 0;
 //
 // BDS Combo Message
 //
-STATIC CONST CHAR8 *ComboMessage = "[Volume Up] Boot Manager";
+STATIC CONST CHAR8 *ComboMessage = "[Vol / Power Key] Boot Manager";
 
 VOID
 EFIAPI
@@ -201,10 +201,18 @@ VOID
 EFIAPI
 PlatformBootManagerUnableToBoot ()
 {
-  EFI_STATUS Status;
+  EFI_STATUS                   Status;
+  EFI_BOOT_MANAGER_LOAD_OPTION LoadOption;
 
   // Execute Secondary Unable To Boot
   DeviceBootManagerUnableToBoot ();
+
+  // Fallback: Attempt to launch Boot Manager Menu if no OS option booted
+  Status = MsBootOptionsLibGetBootManagerMenu (&LoadOption, NULL);
+  if (!EFI_ERROR (Status)) {
+    EfiBootManagerBoot (&LoadOption);
+    EfiBootManagerFreeLoadOption (&LoadOption);
+  }
 
   // Display No Boot OS Logo
   Status = DisplayBootGraphic (BG_NO_BOOT_OS);
