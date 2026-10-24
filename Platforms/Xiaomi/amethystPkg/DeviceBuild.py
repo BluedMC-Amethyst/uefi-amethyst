@@ -38,10 +38,29 @@ class CommonPlatform ():
         "Silicon/Silicium",
         "Silicium-ACPI",
         "Silicium-ACPI/Platforms/Xiaomi",
-        "Silicium-ACPI/Silicon/Qualcomm",
-        "/home/bluekyeet/SmallProject/UniXNU/package",
-        "/home/bluekyeet/SmallProject/UniXNU/drivers/DarwinBoot"
+        "Silicium-ACPI/Silicon/Qualcomm"
     )
+
+    @classmethod
+    def GetPackagesPath (cls):
+        result = list(cls.PackagesPath)
+
+        env_packages = os.environ.get("PACKAGES_PATH")
+        if env_packages:
+            for p in env_packages.split(os.pathsep):
+                if p and p not in result:
+                    result.append(p)
+
+        parent_dir = os.path.dirname(cls.WorkspaceRoot)
+        unixnu_pkg = os.path.join(parent_dir, "UniXNU", "package")
+        darwin_pkg = os.path.join(parent_dir, "UniXNU", "drivers", "DarwinBoot")
+
+        if os.path.isdir(unixnu_pkg) and unixnu_pkg not in result:
+            result.append(unixnu_pkg)
+        if os.path.isdir(darwin_pkg) and darwin_pkg not in result:
+            result.append(darwin_pkg)
+
+        return result
 
 # ####################################################################################### #
 #                         Configuration for Update & Setup                                #
@@ -106,7 +125,7 @@ class SettingsManager (UpdateSettingsManager, SetupSettingsManager, PrEvalSettin
         return "amethyst"
 
     def GetPackagesPath (self):
-        return CommonPlatform.PackagesPath
+        return CommonPlatform.GetPackagesPath()
 
 # ####################################################################################### #
 #                         Actual Configuration for Platform Build                         #
@@ -128,7 +147,7 @@ class PlatformBuilder (UefiBuilder, BuildSettingsManager):
     def GetPackagesPath (self):
         result = [ shell_environment.GetBuildVars().GetValue("FEATURE_CONFIG_PATH", "") ]
 
-        for a in CommonPlatform.PackagesPath:
+        for a in CommonPlatform.GetPackagesPath():
             result.append(a)
 
         return result
