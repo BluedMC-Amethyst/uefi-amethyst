@@ -1,0 +1,165 @@
+<?xml version=\"1.0\" encoding=\"utf-8\"?>
+<PanelDescription>o16u 36 02 0c Single DSI Vid Mode AMOLED Panel with DSC (1220x2712 30bpp)</PanelDescription>
+<Group id=\"Active Timing\">
+ <HorizontalActive>1220</HorizontalActive>
+ <HorizontalFrontPorch>10</HorizontalFrontPorch>
+ <HorizontalBackPorch>80</HorizontalBackPorch>
+ <HorizontalSyncPulse>16</HorizontalSyncPulse>
+ <HorizontalSyncSkew>0</HorizontalSyncSkew>
+ <HorizontalLeftBorder>0</HorizontalLeftBorder>
+ <HorizontalRightBorder>0</HorizontalRightBorder>
+ <VerticalActive>2712</VerticalActive>
+ <VerticalFrontPorch>56</VerticalFrontPorch>
+ <VerticalBackPorch>46</VerticalBackPorch>
+ <VerticalSyncPulse>2</VerticalSyncPulse>
+ <VerticalSyncSkew>0</VerticalSyncSkew>
+ <VerticalTopBorder>0</VerticalTopBorder>
+ <VerticalBottomBorder>0</VerticalBottomBorder>
+ <InvertDataPolarity>False</InvertDataPolarity>
+ <InvertVsyncPolairty>False</InvertVsyncPolairty>
+ <InvertHsyncPolarity>False</InvertHsyncPolarity>
+ <BorderColor>0x0</BorderColor>
+</Group>
+<Group id="Display Interface">
+ <InterfaceType>8</InterfaceType>
+ <InterfaceColorFormat>27</InterfaceColorFormat>
+</Group>
+<Group id="DSI Interface">
+ <DSIChannelId>1</DSIChannelId>
+ <DSIVirtualId>0</DSIVirtualId>
+ <DSIColorFormat>42</DSIColorFormat>
+ <DSITrafficMode>1</DSITrafficMode>
+ <DSILanes>4</DSILanes>
+ <DSIRefreshRate>0x780000</DSIRefreshRate>
+ <DSIBitClockFrequency>1096690000</DSIBitClockFrequency>
+ <DSIDSCEnable>True</DSIDSCEnable>
+ <DSIDSCMajor>1</DSIDSCMajor>
+ <DSIDSCMinor>2</DSIDSCMinor>
+ <DSIDSCScr>0</DSIDSCScr>
+ <DSIDSCProfileID>8</DSIDSCProfileID>
+ <DSIDSCSliceWidth>610</DSIDSCSliceWidth>
+ <DSIDSCSliceHeight>12</DSIDSCSliceHeight>
+ <DSIDSCSlicePerPacket>2</DSIDSCSlicePerPacket>
+ <DSILP11AtInit>True</DSILP11AtInit>
+ <DSIHsaHseAfterVsVe>False</DSIHsaHseAfterVsVe>
+ <DSILowPowerModeInHFP>False</DSILowPowerModeInHFP>
+ <DSILowPowerModeInHBP>False</DSILowPowerModeInHBP>
+ <DSILowPowerModeInHSA>False</DSILowPowerModeInHSA>
+ <DSILowPowerModeInBLLPEOF>True</DSILowPowerModeInBLLPEOF>
+ <DSILowPowerModeInBLLP>True</DSILowPowerModeInBLLP>
+ <DSIControllerMapping>
+  00
+</DSIControllerMapping>
+</Group>
+<DSIInitRCOnSequence>
+ 39 F0 55 AA 52 08 07
+ 39 C0 87
+</DSIInitRCOnSequence>
+<DSIInitRCOffSequence>
+ 39 F0 55 AA 52 08 07
+ 39 C0 00
+</DSIInitRCOffSequence>
+<DSIInitSequence>
+ 39 F0 55 AA 52 08 00
+ 39 6F 02
+ 39 B5 16 46
+ 39 6F 06
+ 39 B5 7F 45 2A 4F 00 00
+ 39 6F 0C
+ 39 B5 48 29 4F 00 00
+ 39 6F 11
+ 39 B5 2A 2A 2A 2A
+ 39 6F 18
+ 39 B5 00 00 00 00 00
+ 39 6F 1D
+ 39 B5 00 00 00 00 00
+ 39 6F 5C
+ 39 B5 01
+ 39 6F 96
+ 39 B5 4F
+ 39 F0 55 AA 52 08 00
+ 39 6F 34
+ 39 DF 1F
+ 39 F0 55 AA 52 08 08
+ 39 6F 44
+ 39 B0 00 00 37 49 3F 39 23 07 2E 07 21 46 31 76 39 36 20 B5 24 95
+ 39 6F 58
+ 39 B0 29 75 2B 85 2E 65 36 05 21 54 2B 24 30 14 36 34 3C E4 3F 04
+ 39 6F 6C
+ 39 B0 22 A3 22 A3 27 C3 3B 23 2A B2 3A 22 27 31 35 A1 3B D1 3D 80
+ 39 6F 36
+ 39 B0 08 DC 0F A0 0F FF
+ 39 F0 55 AA 52 08 00
+ 39 BA 00 4F 00 30 C0 38 10
+ 39 6F 34
+ 39 DF 25
+ 39 F0 55 AA 52 08 01
+ 39 6F 03
+ 39 C7 47
+ 39 F0 55 AA 52 08 00
+ 39 6F 01
+ 39 BE C6
+ 39 F0 55 AA 52 08 03
+ 39 C6 80
+ 39 FF AA 55 A5 80
+ 39 6F 08
+ 39 F9 4C
+ 39 6F 0C
+ 39 F9 C1
+ 39 6F 46
+ 39 F4 07 09
+ 39 6F 4A
+ 39 F4 08 0A
+ 39 6F 56
+ 39 F4 44 44
+ 39 6F 18
+ 39 F4 73
+ 39 6F 2A
+ 39 F4 08
+ 39 6F 0B
+ 39 F5 02
+ 39 6F 32
+ 39 F9 20
+ 39 17 03
+ 39 2F 00
+ 39 51 00 00
+ 39 53 20
+ 39 35 00
+ 39 81 01 19
+ 39 71 00
+ 39 8D 00 00 04 C3 00 00 0A 97
+ 39 03 00
+ 39 90 03
+ 39 6F 01
+ 39 90 43
+ 39 91 AB 28 00 0C C2 00 02 32 01 31 00 08 08 BB 07 7B 10 F0
+ 39 3B 00 30 00 38 00 30 03 A8 00 30 0B 38
+ 39 6F 10
+ 39 3B 00 30 00 38
+ 39 88 01 02 62 09 86 00 00 00 00
+ 39 F0 55 AA 52 08 01
+ 39 6F 1E
+ 39 B9 40
+ 39 6F 0C
+ 39 D8 40 A8
+ 05 11
+ FF 78
+ 05 29
+</DSIInitSequence>
+<DSITermSequence>
+ 05 28
+ FF 0A
+ 05 10
+ FF 78
+</DSITermSequence>
+<DSITimingHSZeroOverride>True</DSITimingHSZeroOverride>
+<DSITimingHSZeroValue>0x19</DSITimingHSZeroValue>
+<Group id='Backlight Configuration'>
+ <BacklightType>3</BacklightType>
+ <BacklightPmicControlType>2</BacklightPmicControlType>
+ <BacklightBitWidth>12</BacklightBitWidth>
+ <BacklightDefault>15</BacklightDefault>
+ <SetAfterRenderLogo>True</SetAfterRenderLogo>
+ <DisplayResetInfo>1 30 10000 10000 0</DisplayResetInfo>
+</Group>
+
