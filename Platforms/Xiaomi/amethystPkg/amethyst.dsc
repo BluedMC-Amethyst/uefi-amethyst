@@ -56,10 +56,10 @@
   gSiliciumPkgTokenSpaceGuid.PcdSmbiosSystemBoardModel|"amethyst"
 
   #
-  # Simple Frame Buffer (Visionox rm69220, 1080x2392, video mode; Display_Reserved at 0xE3940000)
+  # Simple Frame Buffer (O16U 1.5K AMOLED, 1220x2712, video mode; Display_Reserved at 0xE3940000)
   #
-  gSiliciumPkgTokenSpaceGuid.PcdFrameBufferWidth|1080
-  gSiliciumPkgTokenSpaceGuid.PcdFrameBufferHeight|2392
+  gSiliciumPkgTokenSpaceGuid.PcdFrameBufferWidth|1220
+  gSiliciumPkgTokenSpaceGuid.PcdFrameBufferHeight|2712
   gSiliciumPkgTokenSpaceGuid.PcdFrameBufferColorDepth|32
 
   #
