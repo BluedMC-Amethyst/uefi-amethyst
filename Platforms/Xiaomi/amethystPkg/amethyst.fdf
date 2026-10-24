@@ -97,7 +97,10 @@ READ_LOCK_STATUS   = TRUE
   #INF MdeModulePkg/Universal/Acpi/AcpiPlatformDxe/AcpiPlatformDxe.inf
   #INF RuleOverride = ACPITABLE asteroids/AcpiTables.inf
 
-  # UniXNU removed for local build_uefi.py test
+  # UniXNU
+  INF UniXNUPkg/Application/UniXNU/UniXNU.inf
+  INF UniXNUPkg/Driver/UniXNUDxe/UniXNUDxe.inf
+  INF DarwinBootPkg/Driver/DarwinBoot.inf
 
   # Keys over SPMI
   INF amethystPkg/Drivers/ShengKeyInputDxe/ShengKeyInputDxe.inf
