@@ -42,7 +42,15 @@ APRIORI DXE {
   # INF Binaries/amethyst/QcomPkg/Drivers/PmicDxe/PmicDxeLa.inf
   INF Binaries/amethyst/MdeModulePkg/Universal/Disk/DiskIoDxe/DiskIoDxe.inf
   INF Binaries/amethyst/MdeModulePkg/Universal/Disk/PartitionDxe/PartitionDxe.inf
-  INF MdeModulePkg/Universal/Disk/RamDiskDxe/RamDiskDxe.inf
+  # RamDiskDxe is deliberately not Apriori-scheduled.  Its DEPEX requires
+  # gEfiHiiDatabaseProtocolGuid + gEfiHiiConfigRoutingProtocolGuid, but
+  # HiiDatabaseDxe is 15 entries further down this list.  Apriori scheduling sets
+  # Dependent = FALSE and skips DEPEX evaluation, so RamDiskDxe ran with
+  # gHiiDatabase == NULL and hung in HiiAddPackages (ordinal 36).  The module is
+  # still placed in the FV by DXE.inc and is dispatched once its DEPEX is
+  # satisfied, which is what the stock firmware does: its Apriori array has no
+  # RamDiskDxe entry either.
+  # INF MdeModulePkg/Universal/Disk/RamDiskDxe/RamDiskDxe.inf
 
   INF MdeModulePkg/Universal/Disk/UnicodeCollation/EnglishDxe/EnglishDxe.inf
 
