@@ -16,6 +16,8 @@ ASM_FUNC (_ModuleEntryPoint)
   // Before the first store of this stage: clean and invalidate the data caches the previous stage filled. x0 is preserved
   // in x20 across the call, which only clobbers x0-x11.
   mov   x20, x0
+  mov   x21, x1
+  mov   x22, x2
   bl    ASM_PFX (SecCleanInvalidateDataCacheAll)
   mov   x0, x20
 
@@ -60,6 +62,8 @@ ASM_PFX (MainEntryPoint):
   // and keep the call target in a register that is not an argument register.
   // x20 is callee-saved, so the calls above preserve it.
   mov   x0, x20
+  mov   x1, x21
+  mov   x2, x22
   ldr   x3, =ASM_PFX (SecEntry)
 
   // Clear Frame Pointer

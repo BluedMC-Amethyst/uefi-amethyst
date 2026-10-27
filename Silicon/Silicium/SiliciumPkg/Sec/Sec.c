@@ -27,7 +27,17 @@ STATIC CONST EFI_GUID  mEntryArgHobGuid = {
   0xDAEE82E6, 0x8090, 0x4E72, { 0xBF, 0xB9, 0x78, 0xC1, 0x3C, 0xD4, 0xE3, 0x59 }
 };
 
+STATIC CONST EFI_GUID  mEmbeddedPayloadHobGuid = {
+  0xA8E7F3A4, 0xE28B, 0x4E66, { 0xA4, 0x6E, 0x99, 0x72, 0x78, 0x65, 0x72, 0x31 }
+};
+
+typedef struct {
+  UINT64  Base;
+  UINT64  Size;
+} EMBEDDED_PAYLOAD;
+
 STATIC UINT64  mEntryArgument;
+STATIC EMBEDDED_PAYLOAD  mEmbeddedPayload;
 
 #ifndef MDEPKG_NDEBUG
 STATIC
@@ -106,6 +116,14 @@ InitializeMemory (VOID)
     BuildGuidDataHob (&mEntryArgHobGuid, &mEntryArgument, sizeof (mEntryArgument));
   }
 
+  if ((mEmbeddedPayload.Base >= 0x80000000) &&
+      (mEmbeddedPayload.Base < 0x0001000000000000) &&
+      ((mEmbeddedPayload.Base & 7) == 0) &&
+      (mEmbeddedPayload.Size != 0) && ((mEmbeddedPayload.Size & 511) == 0))
+  {
+    BuildGuidDataHob (&mEmbeddedPayloadHobGuid, &mEmbeddedPayload, sizeof (mEmbeddedPayload));
+  }
+
   return EFI_SUCCESS;
 }
 
@@ -170,12 +188,16 @@ SecMain (VOID)
 
 VOID
 SecEntry (
-  IN UINT64  EntryArgument
+  IN UINT64  EntryArgument,
+  IN UINT64  EmbeddedPayloadBase,
+  IN UINT64  EmbeddedPayloadSize
   )
 {
   // Record the handoff argument before anything can clobber it.  The FD range
   // is written back below, so this store reaches DRAM with the rest of them.
   mEntryArgument = EntryArgument;
+  mEmbeddedPayload.Base = EmbeddedPayloadBase;
+  mEmbeddedPayload.Size = EmbeddedPayloadSize;
 
   // Disable Data Cache
   ArmDisableDataCache ();

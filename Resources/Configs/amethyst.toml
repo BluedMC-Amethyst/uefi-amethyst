@@ -13,6 +13,7 @@ model_count = 1
 #
 [boot_shim]
 requires_kernel_header = true
+embed_ramdisk = true
 
 #
 # UEFI FD Configs (inside the vendor's UEFI_FD region, as on giulia)

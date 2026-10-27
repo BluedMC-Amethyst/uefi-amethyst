@@ -7,7 +7,7 @@ _StackBase:
   .quad FD_BASE         /* Text Offset */
 
 _StackSize:
-  .quad FD_SIZE + (_Payload - _Head) /* Complete shim and payload */
+  .quad FD_SIZE + EMBEDDED_PAYLOAD_SIZE + (_Payload - _Head) /* Complete shim, FD and payload */
   .quad 0               /* Flags */
   .quad 0               /* Reserved */
   .quad 0               /* Reserved */
@@ -31,6 +31,12 @@ _CopyLoop:
   ldr   x5, =FD_BASE
 
 _Entry:
+  /* The embedded payload immediately follows the source FD. Preserve its
+     address and size for SEC while x0 continues to carry the firmware FDT. */
+  adr   x1, _Payload
+  add   x1, x1, #FD_SIZE
+  ldr   x2, =EMBEDDED_PAYLOAD_SIZE
+
   /* Publish the copied instructions before executing them. */
   dsb   sy
   mrs   x9, ctr_el0
