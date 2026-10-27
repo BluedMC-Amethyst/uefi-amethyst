@@ -13,6 +13,12 @@
 .set CTRL_SPAN_BIT, BIT23
 
 ASM_FUNC (_ModuleEntryPoint)
+  // Before the first store of this stage: clean and invalidate the data caches the previous stage filled. x0 is preserved
+  // in x20 across the call, which only clobbers x0-x11.
+  mov   x20, x0
+  bl    ASM_PFX (SecCleanInvalidateDataCacheAll)
+  mov   x0, x20
+
   // Do Platform Specific Initialization
   bl    ASM_PFX (PlatformAssemblyInitialize)
 
