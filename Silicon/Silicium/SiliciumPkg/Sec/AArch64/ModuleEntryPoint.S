@@ -56,14 +56,17 @@ ASM_PFX (MainEntryPoint):
   cmp   x0, x2
   b.lt  0b
 
-  // Set Jump Location
-  ldr   x0, =ASM_PFX (SecEntry)
+  // Restore the handoff argument saved at entry into x0 (the first argument)
+  // and keep the call target in a register that is not an argument register.
+  // x20 is callee-saved, so the calls above preserve it.
+  mov   x0, x20
+  ldr   x3, =ASM_PFX (SecEntry)
 
   // Clear Frame Pointer
   mov   x29, xzr
 
   // Jump to C Code
-  blr   x0
+  blr   x3
 
   // Do Infinite Spin
   b     .

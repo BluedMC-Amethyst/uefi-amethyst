@@ -18,6 +18,17 @@
 
 #include "Sec.h"
 
+//
+// The value the previous stage passed in x0 is published under this GUID as a
+// UINT64.  UniXNU's UniXNURamDiskDxe reads it as the firmware device tree and
+// takes the payload volume from /chosen/linux,initrd-start and -end.
+//
+STATIC CONST EFI_GUID  mEntryArgHobGuid = {
+  0xDAEE82E6, 0x8090, 0x4E72, { 0xBF, 0xB9, 0x78, 0xC1, 0x3C, 0xD4, 0xE3, 0x59 }
+};
+
+STATIC UINT64  mEntryArgument;
+
 #ifndef MDEPKG_NDEBUG
 STATIC
 VOID
@@ -85,6 +96,16 @@ InitializeMemory (VOID)
   // Build Stack HOB
   BuildStackHob (FixedPcdGet64 (PcdCPUCoresStackBase), FixedPcdGet32 (PcdCPUCorePrimaryStackSize));
 
+  // Publish the entry argument for DXE, which cannot read the SEC entry
+  // registers.  Only a value that can be a 64-bit physical address is
+  // published: a zero, a small integer, or a non-canonical value in x0 must not
+  // turn into a pointer that a later driver dereferences.
+  if ((mEntryArgument >= 0x80000000) && (mEntryArgument < 0x0001000000000000) &&
+      ((mEntryArgument & 7) == 0))
+  {
+    BuildGuidDataHob (&mEntryArgHobGuid, &mEntryArgument, sizeof (mEntryArgument));
+  }
+
   return EFI_SUCCESS;
 }
 
@@ -148,8 +169,14 @@ SecMain (VOID)
 }
 
 VOID
-SecEntry (VOID)
+SecEntry (
+  IN UINT64  EntryArgument
+  )
 {
+  // Record the handoff argument before anything can clobber it.  The FD range
+  // is written back below, so this store reaches DRAM with the rest of them.
+  mEntryArgument = EntryArgument;
+
   // Disable Data Cache
   ArmDisableDataCache ();
 
