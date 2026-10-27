@@ -89,6 +89,10 @@
   #
   UniXNUPkg/Application/UniXNU/UniXNU.inf
   UniXNUPkg/Driver/UniXNUDxe/UniXNUDxe.inf
+  UniXNUPkg/Driver/UniXNURamDiskDxe/UniXNURamDiskDxe.inf {
+    <LibraryClasses>
+      HobLib|MdePkg/Library/DxeHobLib/DxeHobLib.inf
+  }
   DarwinBootPkg/Driver/DarwinBoot.inf
 
   #
