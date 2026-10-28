@@ -6,6 +6,15 @@
 
 This Project focuses on Making ARM-Based Devices Boot Operating Systems like Windows or Linux using Custom UEFI Firmware.
 
+### Amethyst UniXNU status
+
+The `amethyst` branch supports RAM-only UniXNU handoff through `fastboot boot`.
+It preserves the stock Amethyst ClockDxe, carries the embedded FAT payload to
+DarwinBoot, publishes a GOP framebuffer, and exits boot services successfully.
+Hardware testing reaches XNU's visible text console and the root-mount boundary;
+the remaining root and platform work belongs to the device repository rather
+than the firmware handoff.
+
 ## Resources
 
 - [Status](Status.md)
